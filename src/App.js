@@ -1,25 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Route} from "react-router-dom";
+
+import Navigation from "./components/navigation.component";
+import ExistingList from "./components/existing-list.component";
+import Newcontact from "./components/new.component";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="container">
+      <Navigation />
+      <br/>
+        <Route path="/" exact component = { () =>
+            <ExistingList/>
+          }
+          />
+          <Route path = "/new" exact component = { (props) =>
+            <Newcontact value = 'false' {...props}/> 
+          } />
+          <Route path = "/new/:id" exact component = { (props) =>
+            <Newcontact value = 'true' {...props}/>
+          } />
+          <Route path = "/new/open/:id" component = { (props) =>
+            <Newcontact value = 'true' disable =  'true' {...props}/>
+          } />
+      </div>
+    </Router>
   );
 }
 
